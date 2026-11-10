@@ -1,0 +1,60 @@
+/* Maqueta independiente. No modifica el portfolio original. */
+html { --intro: 0s !important; }
+html body [data-entrada], .hud-rec, .hud-tc, .hud-escena,
+.hero-top, .hero-frase, .reel-intro, .reel-nota, .tr-año, #trabajos .sh-meta,
+.tr-lema, #contacto .cta, #contacto .creditos, #contacto .fin,
+.proyecto .p-visor, .proyecto [aria-labelledby="t-rodaje"],
+.proyecto [aria-labelledby="t-resultado"] { display: none !important; }
+#contacto .pie { margin-top:clamp(3rem,7vw,6rem); padding-bottom:5rem; }
+.p-ficha { width:100%; max-width:30rem; justify-self:end; border-top:2px solid var(--ink); }
+.p-ficha h2 { padding:1rem 0 1.6rem; color:var(--red); }
+.p-ficha dl > div { display:grid; grid-template-columns:5rem 1fr; gap:1.25rem; padding:1.1rem 0; border-top:1px solid var(--rule); }
+.p-ficha dt { font: .75rem/1.4 var(--f-mono); text-transform:uppercase; letter-spacing:.05em; }
+.p-ficha dd { font-size:clamp(1.1rem,1.65vw,1.6rem); line-height:1.25; font-weight:500; }
+.hero { padding-top: clamp(7rem, 17vh, 11rem) !important; padding-bottom: 3.5rem !important; }
+.hero-pie { margin-top: auto; }
+.tr-link { grid-template-columns: 4.5rem minmax(0,1fr) minmax(0,17rem) 2rem !important; }
+#contacto .correo { margin-top: 0; margin-bottom: 1.4rem; }
+.mock-phone { display: flex; align-items: center; gap: 1rem; margin-bottom: 3.5rem; font-size: clamp(1.8rem, 4vw, 3.8rem); font-weight: 500; font-stretch: 85%; width: fit-content; }
+.mock-phone svg { width: .65em; height: .65em; }
+.mock-phone:hover { color: var(--accent); }
+#contacto .redes { display:flex; gap:1rem; padding-top:.3rem; }
+#contacto .redes a { display:grid; place-items:center; justify-content:center; width:64px; height:64px; border:1px solid var(--rule); border-radius:50%; padding:0; transition:color .2s,background .2s,transform .2s; }
+#contacto .redes a:hover { color:var(--ink); background:var(--paper); transform:translateY(-3px); }
+#contacto .redes a svg { width:26px; height:26px; }
+.mock-tools { position:fixed; z-index:500; right:18px; bottom:18px; display:flex; gap:2px; align-items:center; padding:5px; background:#eee9e0; color:#141312; border:1px solid #b6b0a5; border-radius:9px; box-shadow:0 5px 24px #0002; font:12px var(--f-mono,monospace); }
+.mock-tools span { padding:0 10px; opacity:.65; }
+.mock-tools button { padding:9px 12px; border-radius:5px; }
+.mock-tools button:hover, .mock-tools button[aria-pressed=true] { background:#141312; color:#eee9e0; }
+.mock-tools button:focus-visible { outline:3px solid #c8161d; outline-offset:3px; }
+
+/* Entrada del nombre. La rueda conserva su desplazamiento nativo. */
+.hero { min-height:100svh !important; justify-content:flex-end !important; }
+.hero-pie { margin-top:0; grid-template-columns:1fr auto !important; }
+.hero-nombre .ch { animation:none !important; transform:none !important; }
+.hero .hero-in { animation:none !important; opacity:1 !important; transform:none !important; }
+.hero-nombre { transform:translateY(0); }
+html.name-intro .hero-nombre { transform:translateY(var(--name-start-y,0px)); }
+html.name-intro.name-settling .hero-nombre { transform:translateY(0); transition:transform 600ms cubic-bezier(.22,1,.36,1); }
+html.name-intro:not(.name-settling) body > :not(main):not(script):not(style),
+html.name-intro:not(.name-settling) main > :not(.hero),
+html.name-intro:not(.name-settling) .hero-pie { visibility:hidden; opacity:0 !important; pointer-events:none; }
+html.name-settling .nav, html.name-settling .hero-pie, html.name-settling .mock-tools { animation:name-reveal 550ms ease both !important; }
+html.name-skip .hero-nombre { transition:none !important; }
+@keyframes name-reveal { from { opacity:0; } to { opacity:1; } }
+@media (max-width:900px) {
+ .p-ficha { max-width:none; justify-self:start; }
+ .tr-link { grid-template-columns:3rem minmax(0,1fr) 2rem !important; }
+ .tr-meta { grid-column:2 !important; }
+ .tr-flecha { grid-column:3 !important; grid-row:1 !important; }
+ .hero { padding-top:7rem !important; padding-bottom:5.5rem !important; }
+ .hero-pie { grid-template-columns:1fr !important; }
+ .mock-tools { right:8px; bottom:8px; left:8px; justify-content:center; font-size:10px; }
+ .mock-tools span { display:none; }
+ .mock-tools button { padding:9px 7px; }
+}
+@media (max-width:600px) { #contacto .redes a { width:56px; height:56px; } }
+@media (prefers-reduced-motion:reduce) {
+ .hero-nombre { transform:none !important; transition:none !important; }
+ html.name-settling .nav, html.name-settling .hero-pie, html.name-settling .mock-tools { animation:none !important; }
+}

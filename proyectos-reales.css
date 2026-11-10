@@ -1,0 +1,110 @@
+.real-cover { display:flex; flex-direction:column; justify-content:space-between; padding:clamp(1.5rem,4vw,4rem); background:#c8161d; color:#eee9e0; }
+.real-cover--domingo-quimico { background:#272a30; }
+.real-cover--como-seria-vivir-en-el-campo { background:#68715b; }
+.real-cover--un-punal { background:#7a1420; }
+.real-cover--summer-xx92 { background:#a8542f; }
+.real-cover--el-video-con-vicente { background:#3d3a33; }
+/* Tarjeta sin ficha propia: se ve, pero no es un enlace. */
+.fusion-card--anunciado { cursor:default; }
+.fusion-card--anunciado .real-cover { opacity:.82; }
+.real-cover strong { max-width:18ch; font:600 clamp(2.8rem,5vw,5.5rem)/.95 var(--f-display); letter-spacing:-.06em; }
+.real-cover > span { font:.72rem/1.5 var(--f-mono); letter-spacing:.08em; text-transform:uppercase; }
+.real-cover .real-cover-note { opacity:.8; }
+.real-nav { position:relative; display:flex; justify-content:space-between; align-items:center; gap:2rem; padding:1.5rem var(--margin); font:.85rem var(--f-mono); }
+.real-nav .real-logo { font:800 1.6rem var(--f-display); letter-spacing:-.07em; }
+.real-nav nav { display:flex; gap:2rem; }
+.real-project { padding-bottom:5rem; }
+.real-project-header { padding:clamp(3rem,8vw,8rem) var(--margin) 3rem; }
+.real-project-header > p { font:.8rem var(--f-mono); margin-bottom:1.8rem; text-transform:uppercase; letter-spacing:.08em; }
+/* El rótulo de categoría del reproductor también se sube aquí, no en el HTML. */
+.rp-sala__portada > div > p { text-transform:uppercase; }
+.real-project-header h1 { max-width:17ch; font:650 clamp(3rem,9vw,10rem)/.95 var(--f-display); letter-spacing:-.055em; }
+.real-project-header .real-artist { margin:1.3rem 0 0; font:1.2rem var(--f-display); }
+.real-player { margin:0 var(--margin); width:calc(100% - 2 * var(--margin)); min-width:0; min-height:22rem; aspect-ratio:21/9; position:relative; }
+.real-player strong { font-size:clamp(2.5rem,5vw,5.5rem); }
+.real-player-note { padding:1rem var(--margin) 0; font:.85rem/1.6 var(--f-mono); color:var(--ink-2); }
+.real-project-intro { padding:4rem var(--margin); display:grid; grid-template-columns:1fr 1fr; gap:3rem; }
+.real-project-intro h2,.real-credits h2 { font:600 clamp(2rem,4vw,3.5rem)/1.1 var(--f-display); letter-spacing:-.04em; }
+.real-role { font:clamp(2rem,4vw,3.8rem)/1.1 var(--f-serif); margin-top:1rem; }
+.real-project-intro p + p { margin-top:1rem; }
+.real-credits { padding:0 var(--margin) 4rem; }
+.real-credits dl { margin-top:2rem; display:grid; grid-template-columns:1fr 1fr; column-gap:4rem; }
+.real-credits dl > div { padding:1rem 0; border-top:1px solid var(--rule); }
+.real-credits dt { font:.75rem/1.5 var(--f-mono); text-transform:uppercase; color:var(--ink-2); }
+.real-credits dd { margin-top:.5rem; font-size:1.15rem; overflow-wrap:anywhere; }
+.real-next { display:flex; justify-content:space-between; align-items:center; gap:2rem; margin:0 var(--margin); border-top:1px solid var(--rule); padding:2rem 0; }
+.real-next span { font:.8rem var(--f-mono); }
+.real-next strong { font:500 clamp(1.6rem,3vw,3rem)/1.1 var(--f-display); }
+.real-showreel-note { position:absolute; bottom:2rem; left:var(--margin); right:var(--margin); z-index:2; color:#eee9e0; font:.85rem/1.5 var(--f-mono); }
+.real-media { position:relative; }
+.real-media video { pointer-events:none; }
+.preview-chip { position:absolute; bottom:1rem; right:1rem; padding:.6rem .8rem; background:#eee9e0; color:#141312; font:.75rem var(--f-mono); opacity:0; transition:opacity .2s; }
+.fusion-card:hover .preview-chip,.fusion-card:focus-visible .preview-chip { opacity:1; }
+.real-video-wrap { margin:0 var(--margin); }
+.real-film { display:block; width:100%; height:auto; max-height:85svh; object-fit:contain; background:#090909; }
+.real-video-fallback { display:inline-block; margin-top:.8rem; font:.75rem/1.5 var(--f-mono); color:var(--ink-2); }
+.real-reel-caption { position:absolute; z-index:2; bottom:clamp(4.5rem,8vw,7rem); left:var(--margin); right:var(--margin); display:flex; align-items:flex-end; justify-content:space-between; gap:2rem; color:#eee9e0; }
+.real-reel-caption > a, .real-reel-caption > span { max-width:13ch; font:500 clamp(2.7rem,7vw,7rem)/.95 var(--f-display); letter-spacing:-.055em; }
+.real-reel-caption button { border:1px solid #eee9e080; border-radius:100px; padding:.8rem 1.2rem; font:.8rem var(--f-mono); background:#14131260; }
+.real-reel-caption button:focus-visible { outline:3px solid #eee9e0; outline-offset:4px; }
+
+/* Texto de la ficha: el rótulo a la izquierda y los párrafos en columna de lectura. */
+.real-texto { padding:0 var(--margin) 4rem; display:grid; grid-template-columns:1fr 1fr; gap:3rem; }
+.real-texto h2 { font:600 clamp(2rem,4vw,3.5rem)/1.1 var(--f-display); letter-spacing:-.04em; }
+.real-texto p { max-width:62ch; font-size:1.15rem; line-height:1.65; }
+.real-texto p + p { margin-top:1.1rem; }
+/* Galería de fotogramas con visor. */
+.real-fotogramas { padding:0 var(--margin) 4rem; }
+.real-fotogramas h2 { font:600 clamp(2rem,4vw,3.5rem)/1.1 var(--f-display); letter-spacing:-.04em; }
+.real-fotogramas ul { list-style:none; margin:2rem 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fill,minmax(15rem,1fr)); gap:.6rem; }
+.real-fotogramas a { display:block; aspect-ratio:2190/1624; overflow:hidden; background:#c9c3b8; }
+.real-fotogramas img { display:block; width:100%; height:100%; object-fit:cover; transition:scale .5s; }
+.real-fotogramas a:hover img, .real-fotogramas a:focus-visible img { scale:1.04; }
+.real-fotogramas a:focus-visible { outline:3px solid currentColor; outline-offset:3px; }
+.real-visor { width:100vw; max-width:none; height:100svh; max-height:none; margin:0; padding:0; border:0; background:#090909f2; color:#eee9e0; }
+.real-visor[open] { display:grid; place-items:center; }
+.real-visor::backdrop { background:#090909; }
+.real-visor img { max-width:min(94vw,calc(88svh * 2190 / 1624)); max-height:88svh; width:auto; height:auto; }
+.real-visor button { position:absolute; width:3rem; height:3rem; display:grid; place-items:center; border:1px solid #eee9e055; border-radius:100px; background:#14131290; color:inherit; font:1.3rem var(--f-mono); cursor:pointer; }
+.real-visor button:hover { border-color:#eee9e0; }
+.real-visor button:focus-visible { outline:3px solid #eee9e0; outline-offset:3px; }
+.real-visor [data-visor=anterior] { left:1.2rem; top:50%; translate:0 -50%; }
+.real-visor [data-visor=siguiente] { right:1.2rem; top:50%; translate:0 -50%; }
+.real-visor [data-visor=cerrar] { right:1.2rem; top:1.2rem; }
+.real-visor__n { position:absolute; left:50%; bottom:1.2rem; translate:-50%; font:.75rem var(--f-mono); letter-spacing:.1em; color:#eee9e0aa; }
+/* Botones del showreel de la portada: el de sonido es pequeño y discreto. */
+.real-reel-botones { display:flex; align-items:center; gap:.7rem; }
+.real-reel-sonido { display:grid; place-items:center; width:2.4rem; height:2.4rem; padding:0 !important; border-radius:100px; opacity:.75; transition:opacity .2s; cursor:pointer; }
+.real-reel-sonido:hover, .real-reel-sonido:focus-visible { opacity:1; }
+.real-reel-sonido .onda { display:none; }
+.real-reel-sonido[aria-pressed="true"] .onda { display:inline; }
+.real-reel-sonido[aria-pressed="true"] .tachado { display:none; }
+@media(max-width:700px) {
+ .real-texto { grid-template-columns:1fr; gap:1.5rem; }
+ .real-visor [data-visor=anterior], .real-visor [data-visor=siguiente] { top:auto; bottom:1rem; translate:none; }
+ .real-visor [data-visor=anterior] { left:1rem; } .real-visor [data-visor=siguiente] { right:1rem; }
+ .real-fotogramas ul { grid-template-columns:repeat(2,1fr); }
+ .real-cover strong { font-size:clamp(2.2rem,9vw,4rem); }
+ .real-nav nav { gap:1rem; }
+ .real-project-intro,.real-credits dl { grid-template-columns:1fr; }
+ .real-player { aspect-ratio:4/3; min-height:19rem; }
+ .real-next { align-items:flex-start; flex-direction:column; gap:1rem; }
+ .real-reel-caption { align-items:flex-start; flex-direction:column; gap:1.5rem; }
+}
+/* Selector de idioma: vive dentro de la navegación, con su misma voz tipográfica. */
+.i18n { display:inline-flex; align-items:center; gap:.15rem; }
+/* En la portada va en la misma fila que los enlaces, separado por un filete. */
+.nav-links > .i18n-li { display:flex; align-items:center; }
+.nav-links > .i18n-li::before { content:''; width:1px; height:1em; margin-right:.7rem; background:currentColor; opacity:.28; }
+.nav-links .i18n button { font-size:inherit; letter-spacing:inherit; }
+.i18n button { padding:.2rem .4rem; border:0; background:none; color:inherit; cursor:pointer; font:.72rem var(--f-mono); letter-spacing:.08em; opacity:.5; transition:opacity .2s; }
+.i18n button:hover { opacity:1; }
+.i18n button[aria-pressed="true"] { opacity:1; text-decoration:underline; text-underline-offset:.35em; }
+.i18n button:focus-visible { outline:2px solid currentColor; outline-offset:3px; }
+@media(prefers-reduced-motion:reduce) { .i18n button { transition:none; } }
+.tr-vacio { padding:4rem 0; font:clamp(1.6rem,3vw,2.6rem) var(--f-serif); color:var(--ink-2); }
+/* El showreel ya lleva su rótulo grande abajo: la cabecera de sección queda solo para lectores de pantalla. */
+#showreel > .wrap > .sh { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+/* Aclaración y contador de la sección de trabajos (maqueta.js quita los originales .tr-lema y .sh-meta). */
+.tr-contador { font:.8rem var(--f-mono); letter-spacing:.08em; color:var(--ink-2); }
+.tr-intro { max-width:58ch; margin:0 0 2rem; font:clamp(1.05rem,1.5vw,1.3rem)/1.5 var(--f-serif); color:var(--ink-2); }

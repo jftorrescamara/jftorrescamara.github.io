@@ -1,0 +1,88 @@
+/* Reproductor «sala de proyección» de las fichas de proyecto.
+   Vídeo a pantalla completa de primeras; al reproducir se apaga la página
+   y los mandos aparecen como un subtítulo. Probado en ../reproductor (propuesta C). */
+.rp { position:relative; --p:0; color:#eee9e0; }
+.rp video { display:block; width:100%; height:100%; object-fit:cover; background:#090909; }
+.rp button { font:inherit; color:inherit; background:none; border:0; cursor:pointer; }
+.rp button:focus-visible { outline:2px solid var(--red-bright); outline-offset:3px; }
+.rp-quieto { cursor:none; }
+.rp-nav { position:absolute; inset:0 0 auto; z-index:5; display:flex; justify-content:space-between; align-items:center; gap:2rem;
+  padding:1.5rem var(--margin); font:.85rem var(--f-mono); color:#eee9e0; transition:opacity .4s; }
+.rp-nav .real-logo { font:800 1.6rem var(--f-display); letter-spacing:-.07em; }
+.rp-nav nav { display:flex; gap:2rem; }
+[data-state=playing] .rp-nav { opacity:0; pointer-events:none; }
+.mock-tools { display:none !important; }
+
+body { transition:background .8s var(--ease-in-out), color .8s; }
+body.rp-oscuro { background:var(--night); color:#eee9e0; }
+body.rp-oscuro .real-credits dl > div, body.rp-oscuro .real-next { border-color:#eee9e022; }
+body.rp-oscuro .real-credits dt { color:#eee9e088; }
+.rp-sala { height:100svh; min-height:34rem; overflow:hidden; cursor:pointer; background:#090909; }
+.rp-sala video { transition:filter .8s; }
+.rp-sala[data-state=idle] video { filter:brightness(.62) saturate(.8); }
+.rp-sala video { position:absolute; inset:auto; max-width:none; object-fit:fill; background:none; } /* tamaño y posición, desde sala.js */
+.rp-ambiente { position:absolute; left:-6%; top:-6%; width:112%; height:112%; filter:blur(40px) saturate(1.5) brightness(.85);
+  opacity:0; transition:opacity 1.2s; pointer-events:none; }
+.rp-sala:not([data-state=idle]) .rp-ambiente { opacity:1; }
+.rp-sala__portada { position:absolute; z-index:2; inset:auto var(--margin) clamp(2.5rem,6vh,4.5rem); display:grid; grid-template-columns:1fr auto; align-items:end; gap:2rem;
+  transition:opacity .6s, translate .8s var(--ease-out); pointer-events:none; }
+.rp-sala__portada p { font:.8rem var(--f-mono); letter-spacing:.08em; }
+.rp-sala__portada > div { min-width:0; }
+.rp-sala__portada h1 { white-space:nowrap; font:italic 400 clamp(3rem,7vw,7.5rem)/.9 var(--f-serif); letter-spacing:-.03em; margin:1rem 0 0 -.05em; }
+.rp-sala__portada .rp-sala__dato { text-align:right; line-height:1.7; }
+.rp-sala:not([data-state=idle]) .rp-sala__portada { opacity:0; translate:0 2rem; }
+/* Play: triángulo blanco, sin círculo, con un acercar y alejar lento y un brillo que sube y baja a la vez; solo está para que se entienda:
+   tras la primera reproducción se va. */
+.rp-play { position:absolute; z-index:4; left:50%; top:46%; translate:-50% -50%; display:grid; place-items:center; width:clamp(4.5rem,6vw,5.5rem); aspect-ratio:1;
+  color:#f4f1ea; transition:opacity .6s, scale .6s var(--ease-out), visibility 0s; animation:rp-zoom 1.6s ease-in-out infinite alternate; }
+.rp-play svg { width:100%; margin-left:8%; overflow:visible; fill:currentColor; stroke:currentColor; stroke-width:7px; stroke-linejoin:round; /* el trazo grueso con unión redonda redondea las esquinas */
+  opacity:.9; animation:rp-brillo 1.6s ease-in-out infinite alternate; transition:opacity .3s; }
+.rp-play:hover svg, .rp-play:focus-visible svg { opacity:1; }
+.rp-visto .rp-play { opacity:0; scale:.7; visibility:hidden; pointer-events:none; transition:opacity .6s, scale .6s var(--ease-out), visibility 0s .6s; }
+.rp-visto .rp-play, .rp-visto .rp-play svg { animation:none; }
+@keyframes rp-zoom { from { scale:.88; } to { scale:1.22; } }
+@keyframes rp-brillo {
+  from { filter:drop-shadow(0 0 3px #ffffff1a); }
+  to { filter:drop-shadow(0 0 14px #ffffffaa) drop-shadow(0 0 40px #ffffff55); }
+}
+.rp-sub { position:absolute; z-index:3; left:50%; bottom:clamp(1.8rem,5vh,3rem); translate:-50%; display:flex; align-items:center; gap:.9rem; white-space:nowrap;
+  padding:.55rem 1rem; background:#0d0c0bcc; font:1.15rem var(--f-serif); transition:opacity .4s; cursor:default; }
+.rp-sub button { font:.75rem var(--f-mono) !important; letter-spacing:.06em; text-decoration:underline; text-underline-offset:3px; }
+.rp-sub i { opacity:.4; font-style:normal; }
+.rp-sala[data-state=idle] .rp-sub, .rp-quieto .rp-sub { opacity:0; pointer-events:none; }
+.rp-linea { position:absolute; z-index:3; left:0; right:0; bottom:0; height:10px; cursor:pointer; touch-action:none; }
+.rp-linea::after { content:""; position:absolute; left:0; right:0; bottom:0; height:3px; background:var(--red); transform-origin:left; transform:scaleX(var(--p)); transition:height .2s; }
+.rp-linea:hover::after { height:6px; }
+.rp-sala__pausa { position:absolute; z-index:3; inset:0; display:grid; place-content:center; text-align:center; gap:1.2rem; background:#0d0c0bb3;
+  opacity:0; pointer-events:none; transition:opacity .4s; }
+.rp-sala[data-state=paused] .rp-sala__pausa { opacity:1; }
+.rp-sala__pausa small { font:.75rem var(--f-mono); letter-spacing:.14em; color:#eee9e0aa; }
+.rp-sala__pausa strong { font:400 clamp(2rem,3.5vw,3.2rem)/1 var(--f-serif); }
+.rp-sala__pausa dl { display:grid; grid-template-columns:auto auto; gap:.3rem 1.5rem; text-align:left; font:.85rem var(--f-mono); margin-top:1rem; }
+.rp-sala__pausa dt { color:#eee9e088; text-transform:uppercase; }
+.rp-sala ~ .real-credits { padding-top:clamp(3rem,6vw,5rem); }
+.rp-sala ~ .real-credits h2 { font-size:clamp(1.6rem,2.6vw,2.4rem); }
+.rp-sala noscript a { position:absolute; z-index:4; left:50%; top:50%; translate:-50% -50%; padding:1rem 1.4rem; background:#eee9e0; color:#141312; font:.85rem var(--f-mono); }
+
+/* Selector de capítulos (piezas con dos completos). En reposo cuelga de la portada; al reproducir, una versión corta va en la barra. */
+.rp-caps { display:flex; gap:1.2rem; font:.8rem var(--f-mono); letter-spacing:.08em; text-transform:uppercase; }
+.rp-caps button { padding:.35rem 0; opacity:.6; transition:opacity .2s; }
+.rp-caps button:hover, .rp-caps button[aria-pressed="true"] { opacity:1; }
+.rp-caps button[aria-pressed="true"] { text-decoration:underline; text-underline-offset:.4em; }
+.rp-caps--portada { grid-column:1/-1; pointer-events:auto; margin-top:-.6rem; }
+.rp-sala:not([data-state=idle]) .rp-caps--portada { pointer-events:none; visibility:hidden; }
+.rp-sub .rp-caps { gap:.7rem; }
+.rp-sub .rp-caps button { font-size:.75rem !important; text-decoration:none; padding:0 .15rem; }
+.rp-sub .rp-caps button[aria-pressed="true"] { text-decoration:underline; text-underline-offset:3px; }
+
+@media (hover:none) {
+  .rp-sala, .rp-quieto { cursor:auto; }
+}
+@media (max-width:700px) {
+  .rp-nav nav { gap:1rem; } .rp-nav nav a:first-child { display:none; }
+  .rp-sala__portada { grid-template-columns:1fr; } .rp-sala__portada .rp-sala__dato { text-align:left; }
+  .rp-sala__portada h1 { font-size:clamp(2.4rem,10vw,3.6rem); }
+  .rp-sub:has(.rp-caps) { flex-wrap:wrap; justify-content:center; width:calc(100% - 1.5rem); row-gap:.25rem; }
+  .rp-sub { font-size:.95rem; gap:.6rem; } .rp-sub > span:first-child, .rp-sub > i:first-of-type { display:none; }
+}
+@media (prefers-reduced-motion:reduce) { .rp *, .rp *::before, .rp *::after, body { transition:none !important; animation:none !important; } }
