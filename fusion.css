@@ -5,9 +5,13 @@
 .fusion #showreel > .wrap { max-width:none; width:100%; padding:0; margin:0; }
 .fusion #showreel .sh { position:absolute; top:6rem; left:var(--margin); z-index:2; margin:0; pointer-events:none; }
 .fusion #showreel .sh-titulo { font: .85rem var(--f-mono); letter-spacing:.12em; text-transform:uppercase; }
-.fusion #showreel .monitor { width:100%; height:100svh; min-height:32rem; aspect-ratio:auto; border:0; border-radius:0; box-shadow:none; }
-.fusion #showreel .monitor::after { content:''; position:absolute; inset:0; background:linear-gradient(180deg,#0004,transparent 30%,#0007); pointer-events:none; }
-.fusion #showreel .monitor-video { opacity:1; filter:none; }
+.fusion #showreel .monitor { display:block; position:relative; overflow:hidden; width:100%; height:auto; min-height:0; aspect-ratio:auto; border:0; border-radius:0; box-shadow:none; background:#141312; }
+.fusion #showreel .monitor::after { content:none; }
+.fusion #showreel .monitor-video { display:block; position:static; width:100%; height:auto; max-height:80svh; aspect-ratio:16/9; object-fit:contain; opacity:1; filter:none; }
+.fusion #showreel .real-reel-caption { position:static; padding:clamp(1.5rem,3vw,3rem) var(--margin); align-items:center; gap:1.5rem; }
+.fusion #showreel .real-reel-caption > span { font-size:clamp(2rem,5vw,4rem); }
+.fusion #showreel .real-reel-caption button { min-height:44px; }
+.fusion #showreel .real-reel-sonido { width:44px; height:44px; }
 .fusion #showreel .monitor-play { z-index:1; display:flex; align-items:flex-end; justify-content:space-between; padding:var(--margin); gap:1.5rem; }
 .fusion #showreel .monitor-play > .label { order:-1; font:500 clamp(3.2rem,8vw,8rem)/.95 var(--f-display); letter-spacing:-.06em; text-transform:none; background:none; padding:0; }
 .fusion #showreel .monitor-play-circulo { width:clamp(66px,8vw,110px); height:clamp(66px,8vw,110px); background:var(--red); border:0; }
@@ -53,7 +57,7 @@
 .fusion .mock-tools { opacity:.85; }
 .fusion .mock-tools:hover,.fusion .mock-tools:focus-within { opacity:1; }
 @media(max-width:700px) {
- .fusion #showreel .monitor { height:75svh; min-height:26rem; }
+ .fusion #showreel .real-reel-caption { align-items:flex-start; flex-direction:column; gap:1rem; }
  .fusion #showreel .monitor-play { padding:1.5rem var(--margin); }
  .fusion #showreel .monitor-play > .label { font-size:clamp(2.4rem,9vw,4rem); }
  .fusion #showreel .monitor-play-circulo { width:56px; height:56px; }
