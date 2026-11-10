@@ -23,12 +23,14 @@
 .fusion-card { display:block; color:inherit; }
 .fusion-frame { aspect-ratio:4/3; background:#c9c3b8; overflow:hidden; }
 .fusion-image { display:block; width:100%; height:100%; object-fit:cover; transition:transform .65s cubic-bezier(.2,.7,.3,1); }
-.fusion-card:hover .fusion-image { transform:scale(1.035); }
+@media (hover:hover) and (pointer:fine) {
+ .fusion-card:hover .fusion-image { transform:scale(1.035); }
+ .fusion-card:hover .fusion-arrow { transform:translate(3px,-3px); }
+}
 .fusion-caption { position:relative; padding:1.15rem 3rem 0 0; }
 .fusion-caption h3 { font:600 clamp(1.6rem,2.8vw,3rem)/1.08 var(--f-display); letter-spacing:-.045em; }
 .fusion-caption p { margin-top:.55rem; font:.8rem/1.5 var(--f-mono); color:var(--ink-2); }
 .fusion-arrow { position:absolute; top:.8rem; right:0; font:2.2rem var(--f-display); color:var(--red); transition:transform .2s; }
-.fusion-card:hover .fusion-arrow { transform:translate(3px,-3px); }
 .fusion-card:focus-visible { outline:3px solid var(--red); outline-offset:6px; }
 .fusion-gallery:not(:has(> [hidden])) > .fusion-item:last-child:nth-child(odd) { grid-column:1/-1; }
 .fusion-gallery:not(:has(> [hidden])) > .fusion-item:last-child:nth-child(odd) .fusion-frame { aspect-ratio:21/9; }
@@ -57,7 +59,9 @@
  .fusion #showreel .monitor-play-circulo { width:56px; height:56px; }
  .fusion-gallery { grid-template-columns:1fr; gap:2.5rem; }
  .fusion-gallery:not(:has(> [hidden])) > .fusion-item:last-child:nth-child(odd) .fusion-frame { aspect-ratio:4/3; }
+ .fusion-caption { padding-right:0; }
  .fusion-caption h3 { font-size:2rem; }
+ .fusion-arrow { display:none; }
  .fusion #trabajos .tr-filtros { gap:.5rem 1rem; }
  .fusion .p-portada { height:78svh; }
  .fusion .p-titulo { font-size:clamp(3.5rem,13vw,6rem); }

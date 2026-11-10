@@ -39,7 +39,13 @@
 .real-media { position:relative; }
 .real-media video { pointer-events:none; }
 .preview-chip { position:absolute; bottom:1rem; right:1rem; padding:.6rem .8rem; background:#eee9e0; color:#141312; font:.75rem var(--f-mono); opacity:0; transition:opacity .2s; }
-.fusion-card:hover .preview-chip,.fusion-card:focus-visible .preview-chip { opacity:1; }
+@media (hover:hover) and (pointer:fine) {
+ .fusion-card:hover .preview-chip { opacity:1; }
+}
+.fusion-card:focus-visible .preview-chip { opacity:1; }
+@media (hover:none) {
+ .preview-chip { display:none; }
+}
 .real-video-wrap { margin:0 var(--margin); }
 .real-film { display:block; width:100%; height:auto; max-height:85svh; object-fit:contain; background:#090909; }
 .real-video-fallback { display:inline-block; margin-top:.8rem; font:.75rem/1.5 var(--f-mono); color:var(--ink-2); }
@@ -108,3 +114,7 @@
 /* Aclaración y contador de la sección de trabajos (maqueta.js quita los originales .tr-lema y .sh-meta). */
 .tr-contador { font:.8rem var(--f-mono); letter-spacing:.08em; color:var(--ink-2); }
 .tr-intro { max-width:58ch; margin:0 0 2rem; font:clamp(1.05rem,1.5vw,1.3rem)/1.5 var(--f-serif); color:var(--ink-2); }
+
+/* Separación al pasar del reproductor al texto del proyecto. */
+.rp-sala + .real-texto { padding-top:clamp(3rem,6vw,5rem); }
+.real-credit-aida { font-weight:700; }

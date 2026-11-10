@@ -78,12 +78,29 @@
       Object.assign(v, { src, loop: false, muted: false });
       v.addEventListener('loadedmetadata', () => texto('[data-dur]', corto(v.duration)), { once: true });
     };
+    const reproducir = async () => {
+      try {
+        await v.play();
+      } catch (error) {
+        if (error.name === 'AbortError') return;
+        if (error.name === 'NotAllowedError' && !v.muted) {
+          v.muted = true;
+          try { await v.play(); return; } catch (retryError) {
+            if (retryError.name === 'AbortError') return;
+          }
+        }
+        // Permite reintentar desde los controles del navegador si el dispositivo bloquea el vídeo.
+        v.controls = true;
+      }
+    };
     async function alternar() {
       if (!completo) {
         completo = true;
         cargar(v.dataset.completo);
-      }
-      if (v.paused) await v.play().catch(() => { v.muted = true; return v.play(); });
+        // La vista previa puede seguir marcada como reproduciéndose al cambiar src en Safari.
+        // Pedir play aquí conserva el gesto del usuario y arranca siempre la pieza completa.
+        await reproducir();
+      } else if (v.paused) await reproducir();
       else v.pause();
       estado();
     }
@@ -99,7 +116,7 @@
       v.poster = b.dataset.poster;
       if (completo) {
         cargar(b.dataset.capitulo);
-        await v.play().catch(() => { v.muted = true; return v.play(); });
+        await reproducir();
         estado();
       }
     }));
