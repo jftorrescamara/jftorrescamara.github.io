@@ -90,3 +90,5 @@ body.rp-oscuro .real-credits dt { color:#eee9e088; }
   .rp-sub { font-size:.95rem; gap:.6rem; } .rp-sub > span:first-child, .rp-sub > i:first-of-type { display:none; }
 }
 @media (prefers-reduced-motion:reduce) { .rp *, .rp *::before, .rp *::after, body { transition:none !important; animation:none !important; } }
+
+.credito-aida-destacado { color:#ffe2a6; font-weight:700; }
