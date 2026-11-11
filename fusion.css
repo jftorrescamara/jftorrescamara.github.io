@@ -88,5 +88,6 @@
 }
 @media(prefers-reduced-motion:reduce) { .fusion-image,.fusion-arrow { transition:none; } }
 
-/* En inglés, el adjetivo va antes del rótulo animado. */
-html[lang="en"] .hero-rol-txt { order:-1; }
+/* «Producer» ocupa ocho celdas y se muestra sin subtítulo. */
+html[lang="en"] .hero-rol-txt,
+html[lang="en"] .hero-rol .flap-ch:nth-child(n+9) { display:none; }

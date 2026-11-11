@@ -39,8 +39,8 @@
 
  /* Rótulo giratorio de la portada. Su script captura las palabras al arrancar y reescribe
     las celdas cada 3 s, así que aquí se cambia letra a letra: cuando una celda muestra la
-    letra española que le toca, se sustituye por la del idioma activo. Por eso el
-    diccionario traduce PRODUCCIÓN por palabras de la misma longitud. */
+    letra española que le toca, se sustituye por la del idioma activo. Las celdas
+    sobrantes de una traducción corta conservan su letra para volver al español. */
  const palabraFlap = new WeakMap();
  const ajustarFlap = (flap, dicc, diccAnterior) => {
   if (!palabraFlap.has(flap)) {
@@ -53,7 +53,7 @@
   const anterior = traducir(original, diccAnterior);
   flap.querySelectorAll('.flap-ch').forEach((celda, i) => {
    const letra = celda.textContent;
-   if (letra !== destino[i] && (letra === original[i] || letra === anterior[i])) celda.textContent = destino[i];
+   if (destino[i] && letra !== destino[i] && (letra === original[i] || letra === anterior[i])) celda.textContent = destino[i];
   });
  };
  const ajustarFlaps = (raiz, dicc, diccAnterior) => {
@@ -148,7 +148,7 @@
 
  const arrancar = async () => {
   try {
-   const datos = await fetch('/idiomas.json?v=03bd37eab8').then(r => r.json());
+   const datos = await fetch('/idiomas.json?v=1a4db61a30').then(r => r.json());
    idiomas = datos.idiomas || idiomas;
    diccionarios = Object.fromEntries(idiomas.map(([codigo]) => [codigo, datos[codigo] || null]));
   } catch {
