@@ -12,21 +12,41 @@
     const state = states.get(video);
     const shouldPlay = state.visible && !document.hidden && !state.stopped &&
       (!reduced.matches || state.explicit) && (video.dataset.preview === 'reel' || state.active || touch.matches);
+    if (state.reelControls && reduced.matches) state.reelControls.hidden = false;
     if (shouldPlay) {
       if (!video.getAttribute('src')) video.src = video.dataset.src;
       video.muted = !state.sound;
-      video.play().catch(() => {
-        // Sin sonido se reintenta en silencio; si tampoco, la portada permanece.
-        if (!video.muted) { state.sound = false; video.muted = true; reflejarSonido(video); video.play().catch(() => {}); }
+      video.play().catch(async error => {
+        if (error.name === 'AbortError') return;
+        if (!video.muted) {
+          state.sound = false;
+          video.muted = true;
+          reflejarSonido(video);
+          try { await video.play(); return; } catch (retryError) {
+            if (retryError.name === 'AbortError') return;
+          }
+        }
+        if (state.reelControls) state.reelControls.hidden = false;
       });
     } else video.pause();
   }
   const observer = new IntersectionObserver(entries => entries.forEach(entry => {
-    states.get(entry.target).visible = entry.isIntersecting && entry.intersectionRatio >= .2;
+    const state = states.get(entry.target);
+    const minimumVisibility = state.reelControls ? .25 : .2;
+    state.visible = entry.isIntersecting && entry.intersectionRatio >= minimumVisibility;
+    if (state.reelControls && !state.visible) state.stopped = false;
     update(entry.target);
-  }), {threshold:[0,.2]});
+  }), {threshold:[0,.2,.25]});
   for (const video of videos) {
-    states.set(video,{visible:false,active:false,stopped:false,explicit:false,sound:false});
+    const reelControls = video.parentElement.querySelector('[data-reel-controls]');
+    states.set(video,{visible:false,active:false,stopped:false,explicit:false,sound:false,reelControls});
+    if (reelControls) {
+      video.addEventListener('playing', () => {
+        video.parentElement.classList.add('is-playing');
+        reelControls.hidden = false;
+      });
+      video.addEventListener('pause', () => video.parentElement.classList.remove('is-playing'));
+    }
     observer.observe(video);
     const card = video.closest('.fusion-card');
     if (card) {
