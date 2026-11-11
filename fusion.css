@@ -5,25 +5,28 @@
 .fusion #showreel > .wrap { max-width:none; width:100%; padding:0; margin:0; }
 .fusion #showreel .sh { position:absolute; top:6rem; left:var(--margin); z-index:2; margin:0; pointer-events:none; }
 .fusion #showreel .sh-titulo { font: .85rem var(--f-mono); letter-spacing:.12em; text-transform:uppercase; }
-.fusion #showreel .monitor { display:block; position:relative; overflow:hidden; width:100%; height:auto; min-height:0; aspect-ratio:16/9; border:0; border-radius:0; box-shadow:none; background:#141312; }
+.fusion #showreel .monitor { display:block; position:relative; overflow:hidden; width:100%; height:auto; min-height:0; aspect-ratio:auto; border:0; border-radius:0; box-shadow:none; background:#141312; }
 .fusion #showreel .monitor::after { content:none; }
+.fusion #showreel .real-reel-stage { position:relative; aspect-ratio:16/9; min-height:0; }
 .fusion #showreel .monitor-cover,
 .fusion #showreel .monitor-video { display:block; position:absolute; inset:0; width:100%; height:100%; }
 .fusion #showreel .monitor-cover { object-fit:cover; }
 .fusion #showreel .monitor-video { object-fit:contain; opacity:0; background:#141312; filter:none; }
-.fusion #showreel .monitor.is-playing .monitor-video { opacity:1; }
+.fusion #showreel .monitor.has-played .monitor-video { opacity:1; }
 .fusion #showreel .real-reel-caption {
   inset:auto 0 0; padding:clamp(2.5rem,7vw,6rem) var(--margin) clamp(1.5rem,4vw,3rem);
   align-items:flex-end; flex-wrap:wrap; gap:1rem; pointer-events:none;
   background:linear-gradient(transparent,#141312d9);
 }
 .fusion #showreel .real-reel-caption > span { font-size:clamp(2.4rem,7vw,6rem); }
-.fusion #showreel .monitor.is-playing .real-reel-caption { padding-top:2rem; background:linear-gradient(transparent,#14131280); }
-.fusion #showreel .monitor.is-playing .real-reel-caption > span { visibility:hidden; }
-.fusion #showreel .real-reel-botones { pointer-events:auto; }
-.fusion #showreel .real-reel-botones[hidden] { display:none; }
-.fusion #showreel .real-reel-caption button { min-height:44px; }
+.fusion #showreel .monitor.has-played .real-reel-caption { display:none; }
+.fusion #showreel .real-reel-bar { justify-content:flex-end; flex-wrap:wrap; gap:.35rem; padding:.25rem var(--margin); background:#141312; }
+.fusion #showreel .real-reel-bar button { min-height:44px; padding:0 .65rem; border:0; color:inherit; background:transparent; font:.8rem var(--f-mono); cursor:pointer; }
+.fusion #showreel .real-reel-bar button:hover { text-decoration:underline; }
+.fusion #showreel .real-reel-bar button:focus-visible { outline:2px solid currentColor; outline-offset:-3px; }
 .fusion #showreel .real-reel-sonido { width:44px; height:44px; }
+.fusion #showreel .monitor:fullscreen { display:flex; flex-direction:column; background:#000; }
+.fusion #showreel .monitor:fullscreen .real-reel-stage { flex:1; width:100%; }
 .fusion #showreel .monitor-play { z-index:1; display:flex; align-items:flex-end; justify-content:space-between; padding:var(--margin); gap:1.5rem; }
 .fusion #showreel .monitor-play > .label { order:-1; font:500 clamp(3.2rem,8vw,8rem)/.95 var(--f-display); letter-spacing:-.06em; text-transform:none; background:none; padding:0; }
 .fusion #showreel .monitor-play-circulo { width:clamp(66px,8vw,110px); height:clamp(66px,8vw,110px); background:var(--red); border:0; }
@@ -69,10 +72,7 @@
 .fusion .mock-tools { opacity:.85; }
 .fusion .mock-tools:hover,.fusion .mock-tools:focus-within { opacity:1; }
 @media(max-width:700px) {
- .fusion #showreel .monitor { aspect-ratio:4/5; }
- .fusion #showreel .real-reel-caption { gap:.5rem; }
- .fusion #showreel .monitor.is-playing .real-reel-caption { justify-content:flex-end; }
- .fusion #showreel .monitor.is-playing .real-reel-caption > span { display:none; }
+ .fusion #showreel .real-reel-caption { padding:1.5rem var(--margin) 1rem; }
  .fusion #showreel .monitor-play { padding:1.5rem var(--margin); }
  .fusion #showreel .monitor-play > .label { font-size:clamp(2.4rem,9vw,4rem); }
  .fusion #showreel .monitor-play-circulo { width:56px; height:56px; }

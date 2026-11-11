@@ -28,9 +28,19 @@
  if (instagram) instagram.href = 'https://www.instagram.com/avec.aida/';
  const monitor = document.querySelector('#showreel .monitor');
  if (monitor) {
-   const reel = document.createElement('div'); reel.className = monitor.className;
+   const reel = document.createElement('div'); reel.className = monitor.className; reel.dataset.reelPlayer = '';
    // Showreel: arranca en silencio y en bucle; el botón de sonido lo gestiona videos-locales.js.
-   reel.innerHTML = '<img class="monitor-cover" src="/media/showreel-cover.jpg" alt=""><video class="monitor-video" width="1920" height="1080" data-preview="reel" data-src="/media/showreel.mp4" poster="/media/showreel-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video><div class="real-reel-caption"><span>Showreel</span><div class="real-reel-botones" data-reel-controls hidden><button type="button" class="real-reel-sonido" data-reel-sonido aria-label="Sonido del showreel" title="Sonido del showreel" aria-pressed="false"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path class="onda" d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/><path class="tachado" d="M16 9l5 6M21 9l-5 6"/></svg></button><button type="button" data-preview-toggle aria-label="Pausar vista previa" aria-pressed="false">Pausar</button></div></div>';
+   reel.innerHTML = `
+     <div class="real-reel-stage">
+       <img class="monitor-cover" src="/media/showreel-cover.jpg" alt="">
+       <video class="monitor-video" width="1920" height="1080" data-preview="reel" data-src="/media/showreel.mp4" poster="/media/showreel-poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video>
+       <div class="real-reel-caption" aria-hidden="true"><span>Showreel</span></div>
+     </div>
+     <div class="real-reel-bar real-reel-botones" data-reel-controls>
+       <button type="button" data-preview-toggle aria-label="Reproducir vista previa" aria-pressed="false">Reproducir</button>
+       <button type="button" class="real-reel-sonido" data-reel-sonido aria-label="Sonido del showreel" title="Sonido del showreel" aria-pressed="false"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path class="onda" d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/><path class="tachado" d="M16 9l5 6M21 9l-5 6"/></svg></button>
+       <button type="button" data-reel-fullscreen aria-pressed="false">pantalla completa</button>
+     </div>`;
    monitor.replaceWith(reel);
  }
 })();

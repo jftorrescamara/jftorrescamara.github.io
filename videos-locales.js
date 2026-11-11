@@ -5,12 +5,12 @@
   const states = new Map();
   // El botón de sonido solo existe en el showreel de la portada: arranca en silencio y lo activa el usuario.
   const reflejarSonido = video => {
-    const boton = video.parentElement.querySelector('[data-reel-sonido]');
+    const boton = video.closest('[data-reel-player]')?.querySelector('[data-reel-sonido]');
     if (boton) boton.setAttribute('aria-pressed', String(!video.muted));
   };
   function update(video) {
     const state = states.get(video);
-    const shouldPlay = state.visible && !document.hidden && !state.stopped &&
+    const shouldPlay = (state.visible || state.fullscreen) && !document.hidden && !state.stopped &&
       (!reduced.matches || state.explicit) && (video.dataset.preview === 'reel' || state.active || touch.matches);
     if (state.reelControls && reduced.matches) state.reelControls.hidden = false;
     if (shouldPlay) {
@@ -38,14 +38,42 @@
     update(entry.target);
   }), {threshold:[0,.2,.25]});
   for (const video of videos) {
-    const reelControls = video.parentElement.querySelector('[data-reel-controls]');
-    states.set(video,{visible:false,active:false,stopped:false,explicit:false,sound:false,reelControls});
-    if (reelControls) {
-      video.addEventListener('playing', () => {
-        video.parentElement.classList.add('is-playing');
-        reelControls.hidden = false;
+    const player = video.closest('[data-reel-player]');
+    const reelControls = player?.querySelector('[data-reel-controls]');
+    const state = {visible:false,active:false,stopped:false,explicit:false,sound:false,fullscreen:false,reelControls};
+    states.set(video,state);
+    if (player) {
+      video.addEventListener('playing', () => player.classList.add('has-played'), {once:true});
+      const fullscreen = player.querySelector('[data-reel-fullscreen]');
+      const syncFullscreen = () => {
+        state.fullscreen = document.fullscreenElement === player || Boolean(video.webkitDisplayingFullscreen);
+        fullscreen.setAttribute('aria-pressed',String(state.fullscreen));
+        update(video);
+      };
+      document.addEventListener('fullscreenchange',syncFullscreen);
+      video.addEventListener('webkitbeginfullscreen',syncFullscreen);
+      video.addEventListener('webkitendfullscreen',syncFullscreen);
+      fullscreen.hidden = !document.fullscreenEnabled && !video.webkitEnterFullscreen;
+      fullscreen.addEventListener('click', async () => {
+        if (document.fullscreenElement === player) {
+          await document.exitFullscreen().catch(() => {});
+          return;
+        }
+        if (video.webkitDisplayingFullscreen) {
+          video.webkitExitFullscreen?.();
+          return;
+        }
+        if (document.fullscreenEnabled && player.requestFullscreen) {
+          try { await player.requestFullscreen(); return; } catch {}
+        }
+        if (video.webkitEnterFullscreen) {
+          try {
+            if (!video.getAttribute('src')) video.src = video.dataset.src;
+            if (!video.readyState) await video.play();
+            video.webkitEnterFullscreen();
+          } catch {}
+        }
       });
-      video.addEventListener('pause', () => video.parentElement.classList.remove('is-playing'));
     }
     observer.observe(video);
     const card = video.closest('.fusion-card');
@@ -53,7 +81,7 @@
       for (const type of ['pointerenter','focusin']) card.addEventListener(type,() => { states.get(video).active = true; update(video); });
       for (const type of ['pointerleave','focusout']) card.addEventListener(type,() => { states.get(video).active = false; update(video); });
     }
-    const sonido = video.parentElement.querySelector('[data-reel-sonido]');
+    const sonido = player?.querySelector('[data-reel-sonido]');
     if (sonido) sonido.addEventListener('click',() => {
       const state = states.get(video);
       state.sound = !state.sound;
@@ -63,7 +91,7 @@
       sonido.setAttribute('aria-pressed',String(state.sound));
       update(video);
     });
-    const button = video.parentElement.querySelector('[data-preview-toggle]');
+    const button = player?.querySelector('[data-preview-toggle]');
     if (button) {
       const label = () => {
         button.textContent = video.paused ? 'Reproducir' : 'Pausar';
