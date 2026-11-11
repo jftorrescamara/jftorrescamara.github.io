@@ -92,3 +92,4 @@ html[lang="en"] .hero-rol-txt { order:-1; }
 
 html:has([data-reel-expanded]) { overflow:hidden; }
 .fusion #showreel .monitor[data-reel-expanded] { position:fixed; inset:0; z-index:1000; }
+html:has([data-reel-expanded]) body > :is(.nav,.mock-tools) { visibility:hidden; }
