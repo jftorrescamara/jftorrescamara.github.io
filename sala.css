@@ -45,6 +45,9 @@ body.rp-oscuro .real-credits dt { color:#eee9e088; }
 .rp-sub { position:absolute; z-index:3; left:50%; bottom:clamp(1.8rem,5vh,3rem); translate:-50%; display:flex; align-items:center; gap:.9rem; white-space:nowrap;
   padding:.55rem 1rem; background:#0d0c0bcc; font:1.15rem var(--f-serif); transition:opacity .4s; cursor:default; }
 .rp-sub button { font:.75rem var(--f-mono) !important; letter-spacing:.06em; text-decoration:underline; text-underline-offset:3px; }
+.rp-sub .rp-sonido { display:grid; place-items:center; width:2rem; height:2rem; padding:0; }
+.rp-sonido__ondas, .rp-sonido[aria-pressed="true"] .rp-sonido__silencio { display:none; }
+.rp-sonido[aria-pressed="true"] .rp-sonido__ondas { display:inline; }
 .rp-sub i { opacity:.4; font-style:normal; }
 .rp-sala[data-state=idle] .rp-sub, .rp-quieto .rp-sub { opacity:0; pointer-events:none; }
 .rp-linea { position:absolute; z-index:3; left:0; right:0; bottom:0; height:10px; cursor:pointer; touch-action:none; }
@@ -76,6 +79,7 @@ body.rp-oscuro .real-credits dt { color:#eee9e088; }
 .rp-sub .rp-caps button[aria-pressed="true"] { text-decoration:underline; text-underline-offset:3px; }
 
 @media (hover:none) {
+  .rp-sub .rp-sonido { width:2.75rem; height:2.75rem; }
   .rp-sala, .rp-quieto { cursor:auto; }
 }
 @media (max-width:700px) {

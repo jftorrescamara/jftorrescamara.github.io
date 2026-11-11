@@ -2,7 +2,7 @@
    Funciona igual en la portada y en las fichas: recorre los nodos de texto y los
    atributos de ATRIBUTOS, y guarda el original para poder volver al español. */
 (() => {
- const ATRIBUTOS = ['aria-label','title','alt','placeholder','data-mute'];
+ const ATRIBUTOS = ['aria-label','title','alt','placeholder'];
  const POR_DEFECTO = 'es';
  const CLAVE = 'maqueta-idioma';
  const originales = new WeakMap();   // nodo → texto en español
@@ -148,7 +148,7 @@
 
  const arrancar = async () => {
   try {
-   const datos = await fetch('/idiomas.json?v=1a4db61a30').then(r => r.json());
+   const datos = await fetch('/idiomas.json?v=107825ae48').then(r => r.json());
    idiomas = datos.idiomas || idiomas;
    diccionarios = Object.fromEntries(idiomas.map(([codigo]) => [codigo, datos[codigo] || null]));
   } catch {

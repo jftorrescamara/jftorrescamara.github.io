@@ -96,7 +96,7 @@
     "CON SONIDO": "WITH SOUND",
     "EN PAUSA ·": "PAUSED ·",
     "· PULSA PARA SEGUIR": "· PRESS TO RESUME",
-    "sonido no|sonido sí": "sound off|sound on",
+    "Sonido": "Sound",
     "sonido": "sound",
     "pantalla completa": "fullscreen",
 
@@ -278,7 +278,7 @@
     "CON SONIDO": "AVEC SON",
     "EN PAUSA ·": "EN PAUSE ·",
     "· PULSA PARA SEGUIR": "· APPUYEZ POUR REPRENDRE",
-    "sonido no|sonido sí": "son coupé|son activé",
+    "Sonido": "Son",
     "sonido": "son",
     "pantalla completa": "plein écran",
 

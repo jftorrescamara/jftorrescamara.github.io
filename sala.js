@@ -41,10 +41,7 @@
         b.setAttribute('aria-label', v.paused || !completo ? 'Reproducir' : 'Pausar');
         if (b.dataset.play) etiqueta(b, b.dataset.play, completo && !v.paused);
       });
-      todos('[data-mute]').forEach(b => {
-        b.setAttribute('aria-pressed', String(!v.muted));
-        if (b.dataset.mute) etiqueta(b, b.dataset.mute, !v.muted);
-      });
+      todos('[data-mute]').forEach(b => b.setAttribute('aria-pressed', String(!v.muted)));
       root.dispatchEvent(new Event('rp:estado'));
     };
     const tiempo = () => {
