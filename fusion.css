@@ -88,5 +88,4 @@
 }
 @media(prefers-reduced-motion:reduce) { .fusion-image,.fusion-arrow { transition:none; } }
 
-/* «Producer» ocupa ocho celdas. */
-html[lang="en"] .hero-rol .flap-ch:nth-child(n+9) { display:none; }
+html[lang="en"] .hero-rol-txt { order:-1; }
