@@ -46,15 +46,29 @@
       video.addEventListener('playing', () => player.classList.add('has-played'), {once:true});
       const fullscreen = player.querySelector('[data-reel-fullscreen]');
       const syncFullscreen = () => {
-        state.fullscreen = document.fullscreenElement === player || Boolean(video.webkitDisplayingFullscreen);
+        state.fullscreen = document.fullscreenElement === player ||
+          Boolean(video.webkitDisplayingFullscreen) || player.hasAttribute('data-reel-expanded');
         fullscreen.setAttribute('aria-pressed',String(state.fullscreen));
         update(video);
+      };
+      const expand = active => {
+        player.toggleAttribute('data-reel-expanded',active);
+        syncFullscreen();
       };
       document.addEventListener('fullscreenchange',syncFullscreen);
       video.addEventListener('webkitbeginfullscreen',syncFullscreen);
       video.addEventListener('webkitendfullscreen',syncFullscreen);
-      fullscreen.hidden = !document.fullscreenEnabled && !video.webkitEnterFullscreen;
+      document.addEventListener('keydown',event => {
+        if (event.key === 'Escape' && player.hasAttribute('data-reel-expanded')) {
+          expand(false);
+          fullscreen.focus();
+        }
+      });
       fullscreen.addEventListener('click', async () => {
+        if (player.hasAttribute('data-reel-expanded')) {
+          expand(false);
+          return;
+        }
         if (document.fullscreenElement === player) {
           await document.exitFullscreen().catch(() => {});
           return;
@@ -64,15 +78,18 @@
           return;
         }
         if (document.fullscreenEnabled && player.requestFullscreen) {
-          try { await player.requestFullscreen(); return; } catch {}
-        }
-        if (video.webkitEnterFullscreen) {
           try {
-            if (!video.getAttribute('src')) video.src = video.dataset.src;
-            if (!video.readyState) await video.play();
-            video.webkitEnterFullscreen();
+            await player.requestFullscreen();
+            if (document.fullscreenElement === player) return;
           } catch {}
         }
+        if (video.webkitEnterFullscreen && video.readyState) {
+          try {
+            video.webkitEnterFullscreen();
+            return;
+          } catch {}
+        }
+        expand(true);
       });
     }
     observer.observe(video);
