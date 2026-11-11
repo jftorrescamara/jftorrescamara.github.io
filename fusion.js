@@ -1,6 +1,5 @@
 (() => {
   document.documentElement.classList.add('fusion');
-  document.title = document.title.replace('Maqueta ·', 'Maqueta 02 ·');
   document.querySelectorAll('.reel-bandas,.monitor .visor,.tr-vistas,.tr-mapa,.sh-num,#contacto .sh-meta,.tr-filtros sup').forEach(node => node.remove());
   const toolbarLabel = document.querySelector('.mock-tools > span');
   if (toolbarLabel) toolbarLabel.textContent = 'MAQUETA 02';

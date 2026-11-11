@@ -5,7 +5,6 @@
   root.classList.add('entrada-fin');
   const remove = '[data-entrada],.hud-rec,.hud-tc,.hud-escena,.hero-top,.hero-frase,.reel-intro,.reel-nota,.tr-año,#trabajos .sh-meta,.tr-lema,#contacto .cta,#contacto .creditos,#contacto .fin,.proyecto .p-visor,.proyecto [aria-labelledby="t-rodaje"],.proyecto [aria-labelledby="t-resultado"]';
   document.querySelectorAll(remove).forEach(element => element.remove());
-  document.title = 'Maqueta · ' + document.title;
   const footer = document.querySelector('#contacto .pie > span');
   if (footer) footer.textContent = footer.textContent.split(' · Rodado')[0];
   // Conservamos los datos profesionales de la claqueta en una ficha editorial.
