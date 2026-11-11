@@ -29,24 +29,6 @@
       const h = (W / H > a) === llenar ? W / a : H, w = h * a, ancho = w / (1 - 2 * rx);
       Object.assign(v.style, { width: `${ancho}px`, height: `${h}px`, left: `${(W - ancho) / 2}px`, top: `${(H - h) / 2}px` });
     };
-    // Relleno ambiental: el fotograma en «cover» sobre un lienzo diminuto con la forma de la pantalla, que el CSS
-    // difumina detrás del vídeo; así cada banda toma los colores del borde de la imagen que tiene al lado.
-    const lienzo = Object.assign(document.createElement('canvas'), { className: 'rp-ambiente' });
-    lienzo.setAttribute('aria-hidden', 'true');
-    v.before(lienzo);
-    const pincel = lienzo.getContext('2d');
-    let ultimo = 0;
-    const pintar = ahora => {
-      if (completo && v.readyState >= 2 && ahora - ultimo > 120) {
-        ultimo = ahora;
-        const W = 48, H = Math.max(1, Math.round(W * root.clientHeight / root.clientWidth));
-        if (lienzo.width !== W || lienzo.height !== H) Object.assign(lienzo, { width: W, height: H });
-        const vw = v.videoWidth * (1 - 2 * rx), vh = v.videoHeight, e = Math.max(W / vw, H / vh), sw = W / e, sh = H / e;
-        pincel.drawImage(v, v.videoWidth * rx + (vw - sw) / 2, (vh - sh) / 2, sw, sh, 0, 0, W, H);
-      }
-      requestAnimationFrame(pintar);
-    };
-    if (!reducido) requestAnimationFrame(pintar);
     v.addEventListener('loadedmetadata', encajarVideo);
     root.addEventListener('rp:estado', encajarVideo);
     addEventListener('resize', encajarVideo);

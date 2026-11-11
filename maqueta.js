@@ -59,7 +59,7 @@
 
   document.body.insertAdjacentHTML('beforeend', `
     <nav class="mock-tools" aria-label="Navegación de la maqueta">
-      <span>MAQUETA</span><button type="button" data-name-replay>Repetir entrada</button>
+      <span>MAQUETA</span>
       <button type="button" data-mock-section="inicio">Inicio</button>
       <button type="button" data-mock-section="showreel">Showreel</button>
       <button type="button" data-mock-section="trabajos">Trabajos</button>
@@ -67,7 +67,6 @@
     </nav>`);
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const heading = document.querySelector('.hero-nombre');
-  if (!heading) document.querySelector('[data-name-replay]').remove();
   let holdTimer, endTimer, fallbackTimer, run = 0;
   const finish = () => {
     ++run;
@@ -115,7 +114,6 @@
       },1000);
     }));
   };
-  document.querySelector('[data-name-replay]')?.addEventListener('click',start);
   document.querySelectorAll('[data-mock-section]').forEach(button => button.addEventListener('click',() => {
     finish();
     const section = document.getElementById(button.dataset.mockSection);

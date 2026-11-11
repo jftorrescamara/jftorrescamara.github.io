@@ -42,7 +42,7 @@
     letra española que le toca, se sustituye por la del idioma activo. Por eso el
     diccionario traduce PRODUCCIÓN por palabras de la misma longitud. */
  const palabraFlap = new WeakMap();
- const ajustarFlap = (flap, dicc) => {
+ const ajustarFlap = (flap, dicc, diccAnterior) => {
   if (!palabraFlap.has(flap)) {
    const palabras = JSON.parse(flap.dataset.flap || '[]');
    palabraFlap.set(flap, palabras.find(palabra => palabra.trim()) || '');
@@ -50,15 +50,16 @@
   const original = palabraFlap.get(flap);
   if (!original) return;
   const destino = traducir(original, dicc);
-  if (destino === original) return;
+  const anterior = traducir(original, diccAnterior);
   flap.querySelectorAll('.flap-ch').forEach((celda, i) => {
-   if (celda.textContent === original[i] && destino[i]) celda.textContent = destino[i];
+   const letra = celda.textContent;
+   if (letra !== destino[i] && (letra === original[i] || letra === anterior[i])) celda.textContent = destino[i];
   });
  };
- const ajustarFlaps = (raiz, dicc) => {
+ const ajustarFlaps = (raiz, dicc, diccAnterior) => {
   const propio = raiz.nodeType === Node.ELEMENT_NODE ? raiz.closest?.('[data-flap]') : null;
-  if (propio) return ajustarFlap(propio, dicc);
-  raiz.querySelectorAll?.('[data-flap]').forEach(flap => ajustarFlap(flap, dicc));
+  if (propio) return ajustarFlap(propio, dicc, diccAnterior);
+  raiz.querySelectorAll?.('[data-flap]').forEach(flap => ajustarFlap(flap, dicc, diccAnterior));
  };
 
  const aplicarA = (raiz, dicc) => {
@@ -87,9 +88,10 @@
   actual = idioma;
   const dicc = diccionarios[idioma] || null;
   observador?.disconnect();
+  const diccAnterior = diccionarios[document.documentElement.lang];
   document.documentElement.lang = idioma;
   aplicarA(document.body, dicc);
-  ajustarFlaps(document.body, dicc);
+  ajustarFlaps(document.body, dicc, diccAnterior);
   // El título de la pestaña vive fuera de body: se traduce tramo a tramo («Maqueta 02 · …»).
   if (!tituloOriginal) tituloOriginal = document.title;
   document.title = tituloOriginal.split(' · ').map(tramo => traducir(tramo, dicc)).join(' · ');
@@ -146,7 +148,7 @@
 
  const arrancar = async () => {
   try {
-   const datos = await fetch('/idiomas.json').then(r => r.json());
+   const datos = await fetch('/idiomas.json?v=03bd37eab8').then(r => r.json());
    idiomas = datos.idiomas || idiomas;
    diccionarios = Object.fromEntries(idiomas.map(([codigo]) => [codigo, datos[codigo] || null]));
   } catch {

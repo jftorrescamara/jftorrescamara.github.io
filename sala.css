@@ -17,13 +17,10 @@ body { transition:background .8s var(--ease-in-out), color .8s; }
 body.rp-oscuro { background:var(--night); color:#eee9e0; }
 body.rp-oscuro .real-credits dl > div, body.rp-oscuro .real-next { border-color:#eee9e022; }
 body.rp-oscuro .real-credits dt { color:#eee9e088; }
-.rp-sala { height:100svh; min-height:34rem; overflow:hidden; cursor:pointer; background:#090909; }
+.rp-sala { height:100svh; min-height:34rem; overflow:hidden; cursor:pointer; background:#000; }
 .rp-sala video { transition:filter .8s; }
 .rp-sala[data-state=idle] video { filter:brightness(.62) saturate(.8); }
 .rp-sala video { position:absolute; inset:auto; max-width:none; object-fit:fill; background:none; } /* tamaño y posición, desde sala.js */
-.rp-ambiente { position:absolute; left:-6%; top:-6%; width:112%; height:112%; filter:blur(40px) saturate(1.5) brightness(.85);
-  opacity:0; transition:opacity 1.2s; pointer-events:none; }
-.rp-sala:not([data-state=idle]) .rp-ambiente { opacity:1; }
 .rp-sala__portada { position:absolute; z-index:2; inset:auto var(--margin) clamp(2.5rem,6vh,4.5rem); display:grid; grid-template-columns:1fr auto; align-items:end; gap:2rem;
   transition:opacity .6s, translate .8s var(--ease-out); pointer-events:none; }
 .rp-sala__portada p { font:.8rem var(--f-mono); letter-spacing:.08em; }
