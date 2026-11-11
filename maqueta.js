@@ -57,8 +57,7 @@
   });
 
   document.body.insertAdjacentHTML('beforeend', `
-    <nav class="mock-tools" aria-label="Navegación de la maqueta">
-      <span>MAQUETA</span>
+    <nav class="mock-tools" aria-label="Navegación rápida">
       <button type="button" data-mock-section="inicio">Inicio</button>
       <button type="button" data-mock-section="showreel">Showreel</button>
       <button type="button" data-mock-section="trabajos">Trabajos</button>

@@ -1,8 +1,6 @@
 (() => {
   document.documentElement.classList.add('fusion');
   document.querySelectorAll('.reel-bandas,.monitor .visor,.tr-vistas,.tr-mapa,.sh-num,#contacto .sh-meta,.tr-filtros sup').forEach(node => node.remove());
-  const toolbarLabel = document.querySelector('.mock-tools > span');
-  if (toolbarLabel) toolbarLabel.textContent = 'MAQUETA 02';
   const gallery = document.querySelector('.tr-lista');
   if (gallery) {
     gallery.className = 'fusion-gallery';
