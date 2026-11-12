@@ -148,7 +148,7 @@
 
  const arrancar = async () => {
   try {
-   const datos = await fetch('/idiomas.json?v=3f143f5af2').then(r => r.json());
+   const datos = await fetch('/idiomas.json?v=3f143f5af2-fr').then(r => r.json());
    idiomas = datos.idiomas || idiomas;
    diccionarios = Object.fromEntries(idiomas.map(([codigo]) => [codigo, datos[codigo] || null]));
   } catch {
