@@ -92,3 +92,5 @@ body.rp-oscuro .real-credits dt { color:#eee9e088; }
 @media (prefers-reduced-motion:reduce) { .rp *, .rp *::before, .rp *::after, body { transition:none !important; animation:none !important; } }
 
 .credito-aida-destacado { color:#ffe2a6; font-weight:700; }
+/* Con la página en claro (antes de reproducir) el dorado claro no se lee sobre el papel: dorado oscuro. */
+body:not(.rp-oscuro) .real-credits .credito-aida-destacado { color:#8a5a00; }
